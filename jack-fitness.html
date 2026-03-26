@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jack Fitness – Personal Coaching</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --cream: #e8e0d0;
+    --accent: #d4541a;
+    --accent2: #f0a830;
+    --grey: #2a2a2a;
+    --mid: #555;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 4rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.12em;
+    color: var(--white);
+  }
+  .logo span { color: var(--accent); }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav ul a {
+    text-decoration: none; color: var(--cream);
+    font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase;
+    transition: color .2s;
+  }
+  nav ul a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent); color: var(--white) !important;
+    padding: .55rem 1.4rem; border-radius: 2px;
+  }
+  .nav-cta:hover { background: #bf4a14; color: var(--white) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 4rem;
+    padding-top: 5rem;
+    gap: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(212,84,26,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 30% 80%, rgba(240,168,48,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-text { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: .8rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 32px; height: 1px; background: var(--accent);
+  }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 9vw, 9rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--white);
+  }
+  h1 .line2 { color: var(--accent); }
+  .hero-sub {
+    margin-top: 1.8rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.65);
+    max-width: 420px;
+  }
+  .hero-buttons {
+    display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--accent); color: var(--white);
+    padding: .9rem 2.2rem; text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
+    border-radius: 2px; font-weight: 500;
+    transition: transform .2s, background .2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #bf4a14; transform: translateY(-2px); }
+  .btn-ghost {
+    border: 1px solid rgba(245,240,232,0.3); color: var(--cream);
+    padding: .9rem 2.2rem; text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
+    border-radius: 2px;
+    transition: border-color .2s, color .2s;
+    display: inline-block;
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-visual {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-card {
+    background: var(--grey);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    width: 100%; max-width: 420px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  }
+  .hero-card-img {
+    width: 100%; aspect-ratio: 4/5;
+    background: linear-gradient(160deg, #1a1a1a 0%, #2d2010 50%, #1a0d05 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .silhouette {
+    font-size: 11rem; line-height: 1;
+    filter: grayscale(1) brightness(0.5);
+    user-select: none;
+    animation: breathe 4s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+  }
+  .hero-card-img::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 50%; 
+    background: linear-gradient(to top, var(--grey), transparent);
+  }
+  .hero-card-badge {
+    position: absolute; top: 1rem; right: 1rem; z-index: 2;
+    background: var(--accent);
+    color: var(--white); font-size: 0.65rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: .35rem .8rem; border-radius: 2px;
+  }
+  .hero-card-body {
+    padding: 1.4rem 1.6rem 1.6rem;
+  }
+  .hero-card-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 0.08em;
+  }
+  .hero-card-title {
+    font-size: 0.75rem; color: var(--accent2); letter-spacing: 0.12em;
+    text-transform: uppercase; margin-top: .2rem;
+  }
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1px; margin-top: 1.2rem;
+    background: rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-radius: 0 0 2px 2px; overflow: hidden;
+  }
+  .stat {
+    background: var(--grey);
+    padding: .9rem; text-align: center;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; color: var(--accent); letter-spacing: 0.04em;
+  }
+  .stat-label {
+    font-size: 0.62rem; color: rgba(245,240,232,0.45);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-top: .2rem;
+  }
+
+  /* ── TICKER ── */
+  .ticker {
+    background: var(--accent); padding: .75rem 0;
+    overflow: hidden; white-space: nowrap;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .ticker-inner {
+    display: inline-flex; gap: 3rem;
+    animation: ticker 18s linear infinite;
+  }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .ticker-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 0.15em;
+    color: var(--white); display: flex; align-items: center; gap: 1rem;
+  }
+  .ticker-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.4); border-radius: 50%; }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 7rem 4rem; }
+  .section-tag {
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: .6rem;
+  }
+  .section-tag::before { content:''; width:24px; height:1px; background:var(--accent); }
+  h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    line-height: 1; letter-spacing: 0.02em;
+    color: var(--white);
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+    background: var(--grey);
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-box {
+    aspect-ratio: 3/4;
+    background: linear-gradient(135deg, #1e1208 0%, #0a0a0a 100%);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8rem;
+    position: relative; overflow: hidden;
+  }
+  .about-box::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 70%, rgba(212,84,26,0.2), transparent 60%);
+  }
+  .about-float {
+    position: absolute; bottom: -1.5rem; right: -1.5rem;
+    background: var(--accent); color: var(--white);
+    padding: 1.4rem 1.6rem; border-radius: 4px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  }
+  .about-float-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem; line-height: 1;
+  }
+  .about-float-label {
+    font-size: 0.7rem; letter-spacing: 0.1em;
+    text-transform: uppercase; opacity: .8;
+  }
+  .about-text h2 { margin-bottom: 1.5rem; }
+  .about-text p {
+    color: rgba(245,240,232,0.6); line-height: 1.8;
+    margin-bottom: 1rem; font-size: 0.97rem;
+  }
+  .cert-list {
+    margin-top: 1.8rem; display: flex; flex-direction: column; gap: .7rem;
+  }
+  .cert-item {
+    display: flex; align-items: center; gap: .8rem;
+    font-size: 0.82rem; color: rgba(245,240,232,0.7);
+  }
+  .cert-icon { color: var(--accent2); font-size: 1rem; }
+
+  /* ── SERVICES ── */
+  .services { background: var(--black); }
+  .services-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-end; margin-bottom: 3.5rem;
+  }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px; overflow: hidden;
+  }
+  .service-card {
+    background: var(--black); padding: 2.5rem;
+    transition: background .25s;
+    cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .3s;
+  }
+  .service-card:hover { background: var(--grey); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { font-size: 2rem; margin-bottom: 1.4rem; }
+  .service-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 0.05em;
+    margin-bottom: .8rem;
+  }
+  .service-card p {
+    font-size: 0.85rem; color: rgba(245,240,232,0.55);
+    line-height: 1.7;
+  }
+  .service-price {
+    margin-top: 1.5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem; color: var(--accent2);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── RESULTS ── */
+  .results {
+    background: var(--accent);
+    color: var(--white);
+    text-align: center;
+    padding: 5rem 4rem;
+  }
+  .results h2 { color: var(--white); margin-bottom: 3rem; }
+  .results-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem;
+    max-width: 900px; margin: 0 auto;
+  }
+  .result-item {}
+  .result-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem; line-height: 1;
+  }
+  .result-label {
+    font-size: 0.75rem; letter-spacing: 0.15em;
+    text-transform: uppercase; opacity: .75;
+    margin-top: .4rem;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { background: var(--grey); }
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1.5rem; margin-top: 3rem;
+  }
+  .testi-card {
+    background: var(--black);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 4px; padding: 2rem;
+    position: relative;
+  }
+  .testi-quote {
+    font-size: 3rem; line-height: 1;
+    color: var(--accent); font-family: 'Bebas Neue', sans-serif;
+    opacity: .4; margin-bottom: .5rem;
+  }
+  .testi-text {
+    font-size: 0.88rem; line-height: 1.75;
+    color: rgba(245,240,232,0.7); font-style: italic;
+  }
+  .testi-author {
+    margin-top: 1.4rem; display: flex; align-items: center; gap: .8rem;
+  }
+  .testi-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--accent); display: flex; align-items: center;
+    justify-content: center; font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .testi-name {
+    font-size: 0.82rem; font-weight: 500;
+  }
+  .testi-role {
+    font-size: 0.7rem; color: rgba(245,240,232,0.4);
+    letter-spacing: 0.08em; margin-top: .1rem;
+  }
+  .stars { color: var(--accent2); font-size: 0.75rem; margin-bottom: .8rem; }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--black); text-align: center;
+    padding: 8rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(212,84,26,0.1), transparent 70%);
+    pointer-events: none;
+  }
+  .cta-section h2 { position: relative; z-index: 1; font-size: clamp(3.5rem,6vw,6.5rem); }
+  .cta-section p {
+    position: relative; z-index: 1;
+    color: rgba(245,240,232,0.5); font-size: 1rem;
+    max-width: 480px; margin: 1.2rem auto 2.5rem; line-height: 1.7;
+  }
+  .cta-section .btn-primary { position: relative; z-index: 1; font-size: 0.85rem; padding: 1.1rem 2.8rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--grey);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 3rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem; letter-spacing: 0.12em;
+  }
+  .footer-logo span { color: var(--accent); }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    text-decoration: none; color: rgba(245,240,232,0.4);
+    font-size: 0.75rem; letter-spacing: 0.1em;
+    text-transform: uppercase; transition: color .2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy {
+    font-size: 0.72rem; color: rgba(245,240,232,0.25);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+    .hero-visual { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about { grid-template-columns: 1fr; gap: 3rem; }
+    .about-visual { display: none; }
+    .services-grid { grid-template-columns: 1fr; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: repeat(2,1fr); }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+    .services-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">JACK<span>.</span>FITNESS</div>
+  <ul>
+    <li><a href="#about">Om Jack</a></li>
+    <li><a href="#services">Tjenester</a></li>
+    <li><a href="#results">Resultater</a></li>
+    <li><a href="#contact" class="nav-cta">Kom i gang</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text fade-up">
+    <div class="hero-eyebrow">Personal Coaching · Oslo</div>
+    <h1>
+      FORM<br>
+      <span class="line2">DIN</span><br>
+      FREMTID
+    </h1>
+    <p class="hero-sub">
+      Skreddersydde treningsprogrammer og kostholdsplaner som faktisk gir resultater — med Jack ved din side hvert steg på veien.
+    </p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary">Book gratis konsultasjon</a>
+      <a href="#services" class="btn-ghost">Se tjenester</a>
+    </div>
+  </div>
+  <div class="hero-visual fade-up" style="transition-delay:.2s">
+    <div class="hero-card">
+      <div class="hero-card-img">
+        <span class="silhouette">🏋️</span>
+        <div class="hero-card-badge">Tilgjengelig nå</div>
+      </div>
+      <div class="hero-card-body">
+        <div class="hero-card-name">Jack Eriksen</div>
+        <div class="hero-card-title">Sertifisert Personal Trainer</div>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-num">8+</div>
+            <div class="stat-label">År erfaring</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">320</div>
+            <div class="stat-label">Klienter</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">4.9</div>
+            <div class="stat-label">Snittrating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item"><span class="ticker-dot"></span>Styrketrening</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Vekttap</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Muskelvekst</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Kostholdsplan</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Online Coaching</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Løping & Kondis</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Styrketrening</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Vekttap</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Muskelvekst</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Kostholdsplan</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Online Coaching</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>Løping & Kondis</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual fade-up">
+    <div class="about-box">💪</div>
+    <div class="about-float">
+      <div class="about-float-num">320+</div>
+      <div class="about-float-label">Fornøyde klienter</div>
+    </div>
+  </div>
+  <div class="about-text fade-up" style="transition-delay:.15s">
+    <div class="section-tag">Om Jack</div>
+    <h2>TRENER MED HJERTE FOR RESULTATER</h2>
+    <p>
+      Jeg er Jack Eriksen — sertifisert personal trainer med over 8 års erfaring i å hjelpe folk nå sine mål. Jeg tror ikke på quick-fixes eller motetrender. Jeg tror på vitenskapelig basert trening og bærekraftige vaner.
+    </p>
+    <p>
+      Enten du ønsker å gå ned i vekt, bygge muskler, prestere bedre i idretten din, eller bare ha mer energi i hverdagen — jeg lager en plan som passer akkurat deg.
+    </p>
+    <div class="cert-list">
+      <div class="cert-item"><span class="cert-icon">✦</span> NASM Sertifisert Personal Trainer (CPT)</div>
+      <div class="cert-item"><span class="cert-icon">✦</span> Presisjonsernæring – Kostholdscoach Nivå 1</div>
+      <div class="cert-item"><span class="cert-icon">✦</span> Funksjonell styrketrening – Advanced</div>
+      <div class="cert-item"><span class="cert-icon">✦</span> Mental coaching & motivasjon</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div>
+      <div class="section-tag">Tjenester</div>
+      <h2>HVA JEG TILBYR</h2>
+    </div>
+    <a href="#contact" class="btn-primary">Se alle pakker</a>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <div class="service-icon">🏋️‍♂️</div>
+      <h3>1-til-1 PT</h3>
+      <p>Personlig trening i treningssenter eller utendørs. Jeg er ved din side under hver økt og justerer programmet kontinuerlig.</p>
+      <div class="service-price">Fra 750 kr / økt</div>
+    </div>
+    <div class="service-card fade-up" style="transition-delay:.1s">
+      <div class="service-icon">📱</div>
+      <h3>Online Coaching</h3>
+      <p>Skreddersydd trenings- og kostholdsplan levert digitalt, med ukentlig oppfølging, videoanalyse og tilgjengelighet på chat.</p>
+      <div class="service-price">Fra 1 990 kr / mnd</div>
+    </div>
+    <div class="service-card fade-up" style="transition-delay:.2s">
+      <div class="service-icon">🥗</div>
+      <h3>Kostholdsplan</h3>
+      <p>En detaljert og realistisk matvareplan tilpasset dine mål, preferanser og livsstil — uten unødvendig strenge restriksjoner.</p>
+      <div class="service-price">Fra 990 kr</div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results" id="results">
+  <div class="section-tag" style="justify-content:center; color: rgba(255,255,255,0.7);">Resultater</div>
+  <h2>TALLENE SNAKKER FOR SEG SELV</h2>
+  <div class="results-grid">
+    <div class="result-item">
+      <div class="result-num">320+</div>
+      <div class="result-label">Klienter trent</div>
+    </div>
+    <div class="result-item">
+      <div class="result-num">94%</div>
+      <div class="result-label">Når sine mål</div>
+    </div>
+    <div class="result-item">
+      <div class="result-num">8</div>
+      <div class="result-label">År i bransjen</div>
+    </div>
+    <div class="result-item">
+      <div class="result-num">4.9★</div>
+      <div class="result-label">Snittkarakter</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-tag">Hva klientene sier</div>
+  <h2>EKTE RESULTATER</h2>
+  <div class="testi-grid">
+    <div class="testi-card fade-up">
+      <div class="stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Etter 6 måneder med Jack har jeg gått ned 14 kg og er sterkere enn noen gang. Han skaper et trygt og motiverende miljø der du faktisk gleder deg til å trene.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👩</div>
+        <div>
+          <div class="testi-name">Maria Andersen</div>
+          <div class="testi-role">Vekttap-program · 6 mnd</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card fade-up" style="transition-delay:.1s">
+      <div class="stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Online coaching med Jack er absolutt verdt det. Programmet er gjennomtenkt, kommunikasjonen er rask, og resultatene taler for seg selv. Anbefales på det sterkeste!</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👨</div>
+        <div>
+          <div class="testi-name">Thomas Berg</div>
+          <div class="testi-role">Online coaching · 4 mnd</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card fade-up" style="transition-delay:.2s">
+      <div class="stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Jeg hadde prøvd mange PT-er før Jack, men ingen har forstått meg og målene mine like godt. Kostholdsplanen alene forandret livsstilen min totalt.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">👩</div>
+        <div>
+          <div class="testi-name">Sofie Lund</div>
+          <div class="testi-role">1-til-1 PT + kosthold</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2>KLAR FOR FORANDRING?</h2>
+  <p>Book en gratis konsultasjon i dag og ta det første steget mot en sterkere, sunnere versjon av deg selv.</p>
+  <a href="mailto:jack@jackfitness.no" class="btn-primary">Book gratis konsultasjon →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">JACK<span>.</span>FITNESS</div>
+  <div class="footer-links">
+    <a href="#about">Om meg</a>
+    <a href="#services">Tjenester</a>
+    <a href="#results">Resultater</a>
+    <a href="mailto:jack@jackfitness.no">Kontakt</a>
+  </div>
+  <div class="footer-copy">© 2026 Jack Fitness. Alle rettigheter forbeholdt.</div>
+</footer>
+
+<script>
+  // Fade-up on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Trigger hero immediately
+  setTimeout(() => {
+    document.querySelectorAll('.hero .fade-up').forEach(el => el.classList.add('visible'));
+  }, 100);
+</script>
+</body>
+</html>
